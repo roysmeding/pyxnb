@@ -137,6 +137,18 @@ class Tilesheet(object):
 
         self.properties   = read_properties(stream)
 
+    def getTileBounds(self, idx):
+        col = idx  % self.sheet_size.width
+        row = idx // self.sheet_size.width
+
+        left  = self.margin.width  + (self.tile_size.width  + self.spacing.width ) * col
+        upper = self.margin.height + (self.tile_size.height + self.spacing.height) * row
+
+        right = left  + self.tile_size.width
+        lower = upper + self.tile_size.height
+
+        return (left, upper, right, lower)
+
 class Map(object):
     @staticmethod
     def read(stream):
