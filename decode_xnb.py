@@ -1,5 +1,6 @@
 import sys
 import xnb
+import xnb_graphics
 import xtile
 
 if len(sys.argv) != 2:
