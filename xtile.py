@@ -157,10 +157,10 @@ class Map(object):
 
         # read tilesheets
         n_tilesheets = read_i32(stream)
-        self.tilesheets = {}
+        self.tilesheets = []
         for i in range(n_tilesheets):
             ts = Tilesheet(stream, self)
-            self.tilesheets[ts.ts_id] = ts 
+            self.tilesheets.append(ts)
 
         # read layers
         n_layers = read_i32(stream)
@@ -169,7 +169,9 @@ class Map(object):
             self.layers.append(Layer(stream, self))
 
     def get_tilesheet(self, ts_id):
-        return self.tilesheets[ts_id]
-
+        for ts in self.tilesheets:
+            if ts.ts_id == ts_id:
+                return ts
+        return None
 
 xnb.register_reader('xTile.Pipeline.TideReader', Map.read)
