@@ -95,12 +95,6 @@ class Reader(object):
 def register_reader(name, reader, is_primitive=False):
     _type_readers[name] = Reader(reader, is_primitive)
 
-register_reader('System.Int32',                                     read_i32, True)
-register_reader('System.String',                                    read_string)
-register_reader('Microsoft.Xna.Framework.Content.StringReader',     read_string)
-register_reader('Microsoft.Xna.Framework.Content.Int32Reader',      read_i32, True)
-register_reader('Microsoft.Xna.Framework.Content.DictionaryReader', dictionary_reader)
-
 class XNBFile(object):
     _typeNameGrammar = """
             type         = generic_type | simple_type
@@ -160,3 +154,10 @@ class XNBFile(object):
 
     def resolveReader(self, name, version):
         return XNBFile._typeNameParser(name).type()
+
+
+register_reader('System.Int32',                                     read_i32, True)
+register_reader('System.String',                                    read_string)
+register_reader('Microsoft.Xna.Framework.Content.StringReader',     read_string)
+register_reader('Microsoft.Xna.Framework.Content.Int32Reader',      read_i32, True)
+register_reader('Microsoft.Xna.Framework.Content.DictionaryReader', dictionary_reader)
