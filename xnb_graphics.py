@@ -9,9 +9,9 @@ class Texture2D(object):
         self.height = read_u32(stream)
 
         n_mips = read_u32(stream)
-        mips = []
+        self.mips = []
         for i in range(n_mips):
             data_size = read_u32(stream)
-            mips.append(stream.read(data_size))
+            self.mips.append(stream.read(data_size))
 
 xnb.register_reader('Microsoft.Xna.Framework.Content.Texture2DReader', Texture2D)
