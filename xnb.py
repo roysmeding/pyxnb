@@ -101,7 +101,7 @@ class XNBFile(object):
             generic_type = simple_type:base '`' number:n_args '[' ows type_list:args ows ']' -> build_generic(base, n_args, args)
             simple_type  = (namespaced_type_name:t (ows ',' ows assemblyPart:ap -> ap)?:ap -> build_type(t, ap))
             namespaced_type_name = (identifier:t '.' -> t)*:n identifier:i -> n + [i]
-            assemblyPart = identifier:assembly (ows ',' ows attribute:a -> a)*:attrs -> (assembly, attrs)
+            assemblyPart = namespaced_type_name:assembly (ows ',' ows attribute:a -> a)*:attrs -> (assembly, attrs)
             type_list    = type_array:first (ows ',' ows type_array:a -> a)*:rest -> [first]+rest
             type_array   = '[' ows simple_type:t ows ']' -> t
             attribute    = identifier:name ows '=' ows value:value -> Attribute(name, value)
