@@ -1,12 +1,11 @@
 import io
 import xnb
+from xnb import read_bool, read_u8, read_i32, read_float
 
 PROPERTY_BOOL   = 0
 PROPERTY_INT    = 1
 PROPERTY_FLOAT  = 2
 PROPERTY_STRING = 3
-
-from xnb import read_bool, read_u8, read_i32, read_float
 
 def read_xtile_string(stream):
     length = read_i32(stream)
@@ -49,7 +48,7 @@ def read_properties(stream):
 
 class StaticTile(object):
     def __init__(self, stream, layer, tilesheet):
-        self.tile_index = read_i32(stream)
+        self.index = read_i32(stream)
         self.blend_mode = read_u8(stream)
         self.layer      = layer
         self.tilesheet  = tilesheet
@@ -60,11 +59,11 @@ class AnimatedTile(object):
     def __init__(self, stream, layer):
         self.frame_interval = read_i32(stream)
 
-        frame_count    = read_i32(stream)
-        tile_frames = []
+        n_frames    = read_i32(stream)
+        self.frames = []
 
         tilesheet = None
-        while frame_count > 0:
+        while n_frames > 0:
             ch = stream.read(1)
 
             if   ch == b'T':
@@ -72,8 +71,8 @@ class AnimatedTile(object):
                 tilesheet = layer.parent.get_tilesheet(ts_id)
 
             elif ch == b'S':
-                tile_frames.append(StaticTile(stream, layer, tilesheet))
-                frame_count -= 1
+                self.frames.append(StaticTile(stream, layer, tilesheet))
+                n_frames -= 1
 
             else:
                 raise ValueError("Unexpected control character '{}' in animated tile definition".format(ch))
