@@ -18,7 +18,7 @@ for k,v in xnb_file.primaryObject.properties.items():
     print("\t\t{} = {}".format(k, v))
 
 print("Tilesheets:")
-for tilesheet in xnb_file.primaryObject.tilesheets.values():
+for tilesheet in xnb_file.primaryObject.tilesheets:
     print("\tID: '{:s}'".format(tilesheet.ts_id))
     print("\t\tDescription:  '{:s}'".format(tilesheet.description))
     print("\t\tImage source: '{:s}'".format(tilesheet.image_source))
