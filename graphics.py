@@ -1,5 +1,4 @@
 import xnb
-from xnb import read_bool, read_u8, read_i32, read_u32, read_float
 
 class Texture2D(object):
     FORMAT_COLOR        = 0

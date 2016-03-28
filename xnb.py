@@ -37,7 +37,6 @@ def read_string(stream):
     return stream.read(length).decode('utf-8')
 
 _type_readers            = {}
-_registered_type_readers = []
 
 def read_object(stream, t=None):
     if t and t.is_primitive:
@@ -121,6 +120,9 @@ class XNBFile(object):
 
     def __init__(self, filename):
         stream = open(filename, 'rb')
+
+        global _registered_type_readers
+        _registered_type_readers = []
 
         magic = stream.read(3)
         assert magic == b'XNB', "File does not start with 'XNB'."
